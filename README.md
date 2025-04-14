@@ -45,7 +45,7 @@ title: Carrera de camellos - Extraordinaria
 sequenceDiagram
     participant J1 as Jugador 1
     participant J2 as Jugador 2
-    participant S as Servidor/Juego
+    participant S as Juego
     participant IG1 as Interfaz J1
     participant IG2 as Interfaz J2
 
@@ -68,5 +68,5 @@ sequenceDiagram
 ```
 ## **Anotaciones**
 1. **Diagrama de clase**:
-El método solicitarAvancesExtra() la clase Jugador no es definitivo, si el desarrollo se complica no se incluirá.
-No me queda claro si la clase camello es necesaria realmente ya que solo con los jugadores creo que sería suficiente, pero lo he incluido esperando Feedback.
+El método solicitarAvancesExtra() de la clase Jugador no es definitivo, si el desarrollo se complica no se incluirá.
+No me queda claro si las clases camello y certificado son realmente necesarias, ya que en el caso de la clase camellos al tener jugadores creo que sería suficiente, pero las he incluido esperando Feedback.
