@@ -11,30 +11,27 @@ classDiagram
         -String idPartida
         -Jugador[] jugadores
         -Jugador ganador
+        -int meta
+        +registrarJugador()
         +iniciarPartida()
-        +moverCamellos()
-        +registrarJugador(Jugador)
+        +moverJugador()
+        +validarGanador()
     }
 
     class Jugador {
         -String nombre
         -String ip
-        +solicitarAvanceExtra()
-    }
-
-    class Camello {
-        -String nombre
         -int posicion
-        +avanzar(int pasos)
+        +avanzar()
     }
 
     class Certificado {
         -String idPartida
+        -String nombreGanador
         +generarPDF() byte[]
     }
 
     Juego "1" *-- "2" Jugador : Contiene
-    Jugador "1" *-- "1" Camello : Controla
     Juego "1" --> "1" Certificado : Genera
 ```
 ## **Diagrama de secuencia**
@@ -66,7 +63,24 @@ sequenceDiagram
         S->>IG1: Enviar PDF
     end
 ```
-## **Anotaciones**
-1. **Diagrama de clase**:
-El método solicitarAvancesExtra() de la clase Jugador no es definitivo, si el desarrollo se complica no se incluirá.
-No me queda claro si las clases camello y certificado son realmente necesarias, ya que en el caso de la clase camellos al tener jugadores creo que sería suficiente, pero las he incluido esperando Feedback.
+# Plan de Pruebas
+
+## 1. Pruebas del Juego
+| Prueba          | Cómo probarlo                          | Resultado esperado                  |
+|---------------------|----------------------------------------|--------------------------------------|
+| Registrar jugadores | 1. Ingresar nombre del jugador 1<br>2. Ingresar nombre del jugador 2 | El juego se debe iniciar cuando hay 2 jugadores |
+| Movimientos del jugador | Ver posición en pantalla | La posición del jugador aumenta (ej: de 0 a 3) |
+| Detectar al ganador | Mover al jugador hasta pasar la meta | Muestra: "¡Ganaste!" y el botón para generar PDF |
+
+## 2. Pruebas del Certificado
+| Qué probar          | Cómo probarlo                          | Resultado esperado                  |
+|---------------------|----------------------------------------|--------------------------------------|
+| Generar el PDF   | 1. Ganar una partida<br>2. Hacer clic en "Generar certificado" | Se descarga el `certificado_ganador.pdf` |
+| Contenido del PDF   | Abrir el PDF | El PDF muestra:<br>- Nombre del ganador<br>- ID de la partida |
+
+## 3. Pruebas de Errores
+| Qué probar          | Cómo probarlo                          | Resultado esperado                  |
+|---------------------|----------------------------------------|--------------------------------------|
+| Registro inválido   | Intentar iniciar con 1 jugador | Muestra: "Se necesitan 2 jugadores" |
+| Nombre vacío        | Registrar jugador sin nombre | Muestra: "Ingresa un nombre válido" |
+| Desconexión     | Durante la partida, apagar red de un jugador | Muestra: "Partida cancelada - Jugador desconectado, no hay ganador |
